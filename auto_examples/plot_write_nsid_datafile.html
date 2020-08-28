@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>01. Writing a sid Dataset to file in NSID format &mdash; pyNSID 0.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-dataframe.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pyNSID
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">pyNSID</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external_guides.html">Tutorials on Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nsid.html">NSID</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution_guidelines.html">Guidelines for Contribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contact.html">Contact us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyNSID</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>01. Writing a sid Dataset to file in NSID format</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/auto_examples/plot_write_nsid_datafile.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-auto-examples-plot-write-nsid-datafile-py"><span class="std std-ref">here</span></a>     to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="writing-a-sid-dataset-to-file-in-nsid-format">
+<span id="sphx-glr-auto-examples-plot-write-nsid-datafile-py"></span><h1>01. Writing a sid Dataset to file in NSID format<a class="headerlink" href="#writing-a-sid-dataset-to-file-in-nsid-format" title="Permalink to this headline">¶</a></h1>
+<p><strong>Gerd Duscher</strong></p>
+<p>08/24/2020</p>
+<p><strong>this file shows how to store quickly store a sid Dataset to NSID format</strong></p>
+<dl class="simple">
+<dt>Introduction</dt><dd><p>Saving a data and their metadata to file in a comprehensive way after acquisition, as intermediate or final results
+is at the core of any data analysis.
+The NSID data format is an attempt to meet those requirement as painless and universal as possible.
+In the following, we will create a sid.Dataset from a numpy array, which we will store as NSID format in its HDF5 file</p>
+</dd>
+</dl>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import numpy and h5py as the basis for the following operation</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+
+<span class="c1"># All data analysis in pycroscopy is based on sid.Datasets</span>
+<span class="kn">import</span> <span class="nn">sidpy</span> <span class="k">as</span> <span class="nn">sid</span>
+
+<span class="c1"># Utilize the NSID package for writing</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../pyNSID/&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pyNSID</span> <span class="k">as</span> <span class="nn">nsid</span>
+</pre></div>
+</div>
+<p>Making a sid Dataset (which is based on dask) is described in the sid Documentation
+Here, we just make a basic sid.Dataset from a numpy array</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_set</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.zeros.html#numpy.zeros" title="numpy.zeros" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">zeros</span></a><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;zeros&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data_set</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>dask.array&lt;zeros, shape=(4, 5, 10), dtype=float64, chunksize=(4, 5, 10), chunktype=numpy.ndarray&gt;
+</pre></div>
+</div>
+<p>Creating a HDF5 file and groups using h5py is described in the h5py_primer in this directory
+For testing reasons, we first delete the Channel_000 group</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="http://docs.h5py.org/en/latest/high/file.html#h5py.File" title="h5py.File" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_file</span></a> <span class="o">=</span> <a href="http://docs.h5py.org/en/latest/high/file.html#h5py.File" title="h5py.File" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class"><span class="n">h5py</span><span class="o">.</span><span class="n">File</span></a><span class="p">(</span><span class="s2">&quot;zeros.hf5&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="s1">&#39;Measurement_000&#39;</span> <span class="ow">in</span> <a href="http://docs.h5py.org/en/latest/high/file.html#h5py.File" title="h5py.File" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_file</span></a><span class="p">:</span>
+    <span class="k">del</span> <a href="http://docs.h5py.org/en/latest/high/file.html#h5py.File" title="h5py.File" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_file</span></a><span class="p">[</span><span class="s1">&#39;Measurement_000/Channel_000&#39;</span><span class="p">]</span>
+<a href="http://docs.h5py.org/en/latest/high/group.html#h5py.Group" title="h5py.Group" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_group</span></a> <span class="o">=</span> <a href="http://docs.h5py.org/en/latest/high/group.html#h5py.Group.create_group" title="h5py.Group.create_group" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-method"><span class="n">h5_file</span><span class="o">.</span><span class="n">create_group</span></a><span class="p">(</span><span class="s1">&#39;Measurement_000/Channel_000&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Write this sid.Dataset to file with one simple command
+We use the sid hdf_utilities to look at the created h5py file structure</p>
+<p>Please note that the NSID dataset has the dimensions (a,b,c) attached as attributes,
+which are accessible through “h5_dataset.dims”. Look at hf5py for more information.</p>
+<p>The HDF55 group “original_metadata” contains contain all the information of the original file as a dictionary type
+in the attributes original_metadata.attrs (here empty)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="http://docs.h5py.org/en/latest/high/dataset.html#h5py.Dataset" title="h5py.Dataset" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_dataset</span></a> <span class="o">=</span> <span class="n">nsid</span><span class="o">.</span><span class="n">hdf_io</span><span class="o">.</span><span class="n">write_nsid_dataset</span><span class="p">(</span><span class="n">data_set</span><span class="p">,</span> <a href="http://docs.h5py.org/en/latest/high/group.html#h5py.Group" title="h5py.Group" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_group</span></a><span class="p">,</span> <span class="n">main_data_name</span><span class="o">=</span><span class="s1">&#39;zeros&#39;</span><span class="p">)</span>
+
+<span class="n">sid</span><span class="o">.</span><span class="n">hdf</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">print_tree</span><span class="p">(</span><a href="http://docs.h5py.org/en/latest/high/file.html#h5py.File" title="h5py.File" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_file</span></a><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;dimension of hdf5 dataset: &#39;</span><span class="p">,</span> <a href="http://docs.h5py.org/en/latest/high/dataset.html#h5py.Dataset.dims" title="h5py.Dataset.dims" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-attribute"><span class="n">h5_dataset</span><span class="o">.</span><span class="n">dims</span></a><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;name of hdf5 dataset: &#39;</span><span class="p">,</span> <a href="http://docs.h5py.org/en/latest/high/dataset.html#h5py.Dataset.name" title="h5py.Dataset.name" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-attribute"><span class="n">h5_dataset</span><span class="o">.</span><span class="n">name</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;HDF5 group &quot;/Measurement_000/Channel_000&quot; (0 members)&gt; zeros
+/
+├ Measurement_000
+  ---------------
+  ├ Channel_000
+    -----------
+    ├ a
+    ├ b
+    ├ c
+    ├ original_metadata
+      -----------------
+    ├ zeros
+dimension of hdf5 dataset:  &lt;Dimensions of HDF5 object at 140358014260592&gt;
+name of hdf5 dataset:  /Measurement_000/Channel_000/zeros
+</pre></div>
+</div>
+<p>Read NSID Dataset into sid.Dataset with two simple command</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reader</span> <span class="o">=</span> <span class="n">nsid</span><span class="o">.</span><span class="n">NSIDReader</span><span class="p">(</span><a href="http://docs.h5py.org/en/latest/high/group.html#h5py.Group" title="h5py.Group" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_group</span></a><span class="p">)</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sid_datasets</span></a> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># Let&#39;s see what we got</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">i</span></a><span class="p">,</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sid_datasets</span></a><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;read sidpy dataset 1 - printing associated axis a: &#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sid_datasets</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/travis/build/pycroscopy/pyNSID/pyNSID/io/nsi_reader.py:36: FutureWarning: This Reader will eventually be moved to the ScopeReaders package. Be prepared to change your import statements
+  FutureWarning)
+/Measurement_000/Channel_000/zeros
+read sidpy dataset 1 - printing associated axis a:  a - generic (generic): [0 1 2 3]
+</pre></div>
+</div>
+<p>we can also read any specific h5py dataset</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_h5py_dataset</span><span class="p">(</span><a href="http://docs.h5py.org/en/latest/high/group.html#h5py.Group" title="h5py.Group" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_group</span></a><span class="p">[</span><span class="s1">&#39;zeros&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>dask.array&lt;array, shape=(4, 5, 10), dtype=float64, chunksize=(4, 5, 10), chunktype=numpy.ndarray&gt;
+</pre></div>
+</div>
+<p>A result can entail just some values or properties which are most effectivly stored in a dictionary.
+Alternatively, the results are another dataset, or both.
+Here we just add 1 to our dataset and write it to disc.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;added&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="n">result_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">like_data</span><span class="p">(</span><span class="n">dataset</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">result_dataset</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;ones&#39;</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">result_dataset</span><span class="o">.</span><span class="n">source</span></a> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">title</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">result_dataset</span><span class="o">.</span><span class="n">source</span></a><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+
+<a href="http://docs.h5py.org/en/latest/high/group.html#h5py.Group" title="h5py.Group" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results_group</span></a> <span class="o">=</span> <span class="n">nsid</span><span class="o">.</span><span class="n">hdf_io</span><span class="o">.</span><span class="n">write_results</span><span class="p">(</span><a href="http://docs.h5py.org/en/latest/high/group.html#h5py.Group" title="h5py.Group" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_group</span></a><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="n">result_dataset</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a><span class="p">,</span> <span class="n">process_name</span> <span class="o">=</span> <span class="s1">&#39;add one&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><a href="http://docs.h5py.org/en/latest/high/group.html#h5py.Group" title="h5py.Group" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results_group</span></a><span class="p">)</span>
+
+<span class="n">sid</span><span class="o">.</span><span class="n">hdf</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">print_tree</span><span class="p">(</span><a href="http://docs.h5py.org/en/latest/high/file.html#h5py.File" title="h5py.File" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">h5_file</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>source /Measurement_000/Channel_000/zeros /Measurement_000/Channel_000/zeros
+&lt;HDF5 group &quot;/Measurement_000/Channel_000/Log_add one_000&quot; (0 members)&gt; ones
+&lt;HDF5 group &quot;/Measurement_000/Channel_000/Log_add one_000&quot; (5 members)&gt;
+/
+├ Measurement_000
+  ---------------
+  ├ Channel_000
+    -----------
+    ├ Log_add one_000
+      ---------------
+      ├ a
+      ├ b
+      ├ c
+      ├ ones
+      ├ original_metadata
+        -----------------
+    ├ a
+    ├ b
+    ├ c
+    ├ original_metadata
+      -----------------
+    ├ zeros
+</pre></div>
+</div>
+<p>If we read the file again, we get an additional main dataset:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sid_datasets</span></a> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># Let&#39;s see what we got</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">i</span></a><span class="p">,</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sid_datasets</span></a><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/Measurement_000/Channel_000/Log_add one_000/ones
+/Measurement_000/Channel_000/zeros
+</pre></div>
+</div>
+<p>At the end of our program, we need to close the h5py file.
+We cannot close it earlier in case the sidoy dataset is large and then will be only read on demand.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="http://docs.h5py.org/en/latest/high/group.html#h5py.Group.file" title="h5py.Group.file" class="sphx-glr-backref-module-h5py sphx-glr-backref-type-py-attribute"><span class="n">h5_group</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">close</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.070 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-write-nsid-datafile-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/99af5e932b7507fffed17e42c55a4d14/plot_write_nsid_datafile.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_write_nsid_datafile.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/496d5a0620f88cc16e97977201ada011/plot_write_nsid_datafile.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_write_nsid_datafile.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Suhas Somnath, Gerd Duscher, Rama K. Vasudevan, Raj Giridhar, and contributors
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
